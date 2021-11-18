@@ -1,13 +1,8 @@
 <template>
     <div id="catelogue">
         <div id="myChart" :style="{width: '500px', height: '800px'}"></div>
-        
         <div v-for="(item,index) in arr" :key="index" :id="item.id" :style="{width: '500px', height: '800px'}">
             {{item}}
-        </div>
-        <div class="abc">
-            <div @click="add()">点我</div>
-            <input type="text" v-model="val" name="" id="">
         </div>
     </div>
 </template>
@@ -20,8 +15,9 @@
         },
         data() {
             return {
+                input:'',
                 myChart: '',
-                val: '',
+                syncData: '',
                 now: '',
                 data: '',
                 arr: [{
@@ -48,20 +44,27 @@
         },
         methods: {
             open() {
-                //<el-input  placeholder = "请输入笔记名称"> </el-input>
-                this.$alert(  <el-input placeholder = "请输入笔记名称"></el-input>, '添加笔记', {
+                this.$alert(  <input placeholder = "请输入笔记名称" id="content"></input>, '添加笔记', {
                     confirmButtonText: '确定',
                     callback: () => {
-                        if(this.val != '') {
+                        let content = document.getElementById('content');
+                        console.log(content);
+                        this.syncData = content.value
+                        if(content.value != '') {
                             this.add();
                             this.$message({
                             type: 'info',
                             message: `添加成功`
                             });
+                            this.syncData = ''
+                            content.value = ''
+                            console.log(content);
                         } else {
+                             console.log(content);
                             this.$message({
                             type: 'info',
                             message: `添加失败`
+                           
                             });
                         }
                     }
@@ -70,7 +73,8 @@
         add() {
             let myChart = this.$echarts.init(document.getElementById('myChart'))
             this.data.children.push({
-                name: this.val
+                name: this.syncData,
+                children: [{name:'显示笔记'},{name:'新建笔记'}]
             })
             let a = this.data;
             myChart.setOption({
@@ -257,7 +261,7 @@
                 //    this.now.treeAncestors.push({name:that.val})
                 console.log(that.now.data.src);
                 if (that.now.data.src != undefined) {
-                    console.log(111);
+                    window.location.href="http://www.baidu.com"
                 }
                 if (that.now.data.name == '新建文件') {
                     console.log(1);
@@ -313,4 +317,11 @@
 </script>
 
 <style>
+#content {
+    width: 300px;
+    height: 35px;
+    margin-top: 10px;
+    border: 1px solid red;
+    padding-left: 10px;
+}
 </style>
