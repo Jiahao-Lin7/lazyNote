@@ -30,7 +30,7 @@
                         children: [{
                             name: '显示笔记'
                         }, {
-                            name: '添加笔记'
+                            name: '新建笔记'
                         }]
                     }]
                 }, {
@@ -38,6 +38,13 @@
                     id: 'echart1',
                     children: [{
                         name: '新建文件夹'
+                    }, {
+                        name: '生命周期',
+                        children: [{
+                            name: '显示笔记'
+                        }, {
+                            name: '新建笔记'
+                        }]
                     }]
                 }]
             }
@@ -178,7 +185,7 @@
                         name: '新建文件',
                     },
                     {
-                        name: 'fan',
+                        name: '组件传值',
                         src: 'www.baidu.com',
                         children: [{
                                 name: '显示笔记',
@@ -191,19 +198,16 @@
                         ]
                     },
                     {
-                        name: 'display',
+                        name: '生命周期',
                         children: [{
-                                name: 'DirtySprite',
+                                name: '显示笔记',
                                 value: 8833
                             },
                             {
-                                name: 'LineSprite',
+                                name: '新建笔记',
                                 value: 1732
                             },
-                            {
-                                name: 'RectSprite',
-                                value: 3623
-                            }
+                            
                         ]
                     },
                 ]
@@ -259,13 +263,23 @@
                 that.now = params
                 //    console.log(that.val);
                 //    this.now.treeAncestors.push({name:that.val})
-                console.log(that.now.data.src);
+                console.log(that.now);
                 if (that.now.data.src != undefined) {
                     window.location.href="http://www.baidu.com"
                 }
                 if (that.now.data.name == '新建文件') {
-                    console.log(1);
+                    // this.$router.go({name: 'edit', params: {name: that.now.data.name}});
                     that.open()
+                    console.log(2);
+                }
+                if (that.now.data.name == '新建笔记') {
+                    that.$router.push({name: 'edit', params: {
+                        name: that.now.treeAncestors[2].name,
+                        father: that.now.treeAncestors[0].name,
+                    }
+                        });
+                    //that.open()
+                    console.log(2);
                 }
             })
             myChart.setOption({

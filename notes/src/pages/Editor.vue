@@ -1,7 +1,7 @@
 <template>
   <div class="textBox">
     <br />
-    <input type="text" class="title" v-model="title" placeholder="请输入标题" />
+    <el-input type="text" class="title" v-model="title" placeholder="请输入标题" ></el-input>
     <br /><br />
     <div id="editor" class="editor"></div>
     <div class="btn">
@@ -22,6 +22,7 @@ export default {
   name: "Editor",
   data() {
     return {
+      jsonData:'',
       editor: "",
       title: "",
       userid: "",
@@ -47,6 +48,7 @@ export default {
         formData.forEach((value, key) => objData[key] = value);
         return JSON.stringify(objData);
       };
+      
       var jsonData = convert_FormData_to_json(data);
       console.log(data);
       console.log(jsonData);
@@ -66,7 +68,12 @@ export default {
       //   .catch((res) => {
       //     console.log(res);
       //   });
-        this.$store.commit('ADD_NOTE',this.title)
+        // this.$store.commit('ADD_NOTE',this.title)
+        //this.$store.commit("addnote/setPrint", { //print 表示vuex的文件名
+          this.jsonData = jsonData
+          console.log(this.jsonData);
+//         jsonData: jsonData
+// });
     },
     exitEditor(){
         this.$router.push({
@@ -87,6 +94,9 @@ export default {
   width: 100%;
   font-size: 20px;
 }
+.editor {
+  border: 1px solid red;
+}
 .btn {
   margin-top: 10px;
   .add {
@@ -97,5 +107,9 @@ export default {
     float: right;
     margin-right: 20px;
   }
+  
 }
+.el-input__inner {
+     border-color: red;
+  }
 </style>

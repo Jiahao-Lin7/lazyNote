@@ -42,7 +42,7 @@ const router = new Router({
                     component: notebook
                 },
                 {
-                    path: 'edit',
+                    path: 'edit/:name/father',
                     name: 'edit',
                     component: Editor
                 },

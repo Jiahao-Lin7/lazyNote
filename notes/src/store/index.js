@@ -5,12 +5,13 @@ import * as getters from './getters'
 import state from './state'
 import mutations from './mutations'
 import createLogger from 'vuex/dist/logger'
-
+import addnote from './addnote';
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
+    addnote,
     actions,
     getters,
     state,
