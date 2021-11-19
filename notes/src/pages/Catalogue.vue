@@ -300,23 +300,40 @@ import E from "wangeditor";
                 //    console.log(that.val);
                 //    this.now.treeAncestors.push({name:that.val})
                  console.log(that.now);
-                if (that.now.data.src != undefined) {
-                    console.log(1);
-                    // window.location.href="http://www.baidu.com"
-                    // console.log(that.now.data.src);
-                } 
+                // if (that.now.data.src != undefined) {
+                //     console.log(1);
+                //     // window.location.href="http://www.baidu.com"
+                //     // console.log(that.now.data.src);
+                // } 
+                let fn = that.$route.params.obj;
                 if(that.now.data.name == '显示笔记') {
-                    if(that.$route.params.obj != null) {
-                        that.now.data.src = that.$route.params.obj;
+                    console.log(that.now.data);
+                    if(fn && fn!= '') {
+                        if(that.now.data.src) {
+                        console.log(1);
                         that.title = that.now.data.src.src[0].title;
                         that.context = that.now.data.src.src[0].context
-                        console.log(that.title);
+                        that.$route.params.obj=''
+                        } else {
+                            let src = that.$route.params.obj;
+                            that.now.data.src = src
+                            that.title = that.now.data.src.src[0].title;
+                            that.context = that.now.data.src.src[0].context
+                            console.log(that.title);
+                            that.$route.params.obj=''
+                        }
+                        
+                    } else if(that.now.data.src) {
+                        that.title = that.now.data.src.src[0].title;
+                        that.context = that.now.data.src.src[0].context
+                        that.$route.params.obj=''
                     } else  {
                     console.log(1);
                     that.$message({
                         type: 'info',
                         message: `请新建笔记`});
                         }
+                    
                 }
                 if (that.now.data.name == '新建文件') {
                     // this.$router.go({name: 'edit', params: {name: that.now.data.name}});

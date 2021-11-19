@@ -118,6 +118,7 @@ export default {
   font-size: 25px;
   text-align: center;
   color: #db4c3f !important;
+   margin-left: 0 ;
 }
 .el-menu-item{
     color: #dd9089 !important;
