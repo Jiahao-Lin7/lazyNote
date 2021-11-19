@@ -304,19 +304,19 @@ import E from "wangeditor";
                     console.log(1);
                     // window.location.href="http://www.baidu.com"
                     // console.log(that.now.data.src);
-                } else  {
-                    console.log(1);
-                    that.$message({
-                        type: 'info',
-                        message: `请新建笔记`});
-                        }
+                } 
                 if(that.now.data.name == '显示笔记') {
                     if(that.$route.params.obj != null) {
                         that.now.data.src = that.$route.params.obj;
                         that.title = that.now.data.src.src[0].title;
                         that.context = that.now.data.src.src[0].context
                         console.log(that.title);
-                    } 
+                    } else  {
+                    console.log(1);
+                    that.$message({
+                        type: 'info',
+                        message: `请新建笔记`});
+                        }
                 }
                 if (that.now.data.name == '新建文件') {
                     // this.$router.go({name: 'edit', params: {name: that.now.data.name}});
@@ -408,8 +408,5 @@ import E from "wangeditor";
     right: 0;
     top: 0;
     z-index: -10;
-}
-.pic_box {
-    
 }
 </style>
