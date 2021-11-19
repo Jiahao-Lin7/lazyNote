@@ -13,6 +13,8 @@ const state = {
         icon: 'home'
         }
     ],
+    title:'',
+    context:''
 }
 
 export default state

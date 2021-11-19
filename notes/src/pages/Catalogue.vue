@@ -1,20 +1,56 @@
 <template>
     <div id="catelogue">
-        <div id="myChart" :style="{width: '500px', height: '800px'}"></div>
-        <div v-for="(item,index) in arr" :key="index" :id="item.id" :style="{width: '500px', height: '800px'}">
+        <div class="pic_box">
+            <div id="myChart" :style="{width: '500px', height: '500px'}"></div>
+            <div v-for="(item,index) in arr" :key="index" :id="item.id" :style="{width: '500px', height: '500px'}">
             {{item}}
+            </div>
         </div>
+        <div class="box">
+            <div class="title" >{{title}}</div>
+            <div class="context" v-html="context"></div>
+        </div>
+        <!-- <div>{{this.title}}{{this.context}}</div> -->
+        <!-- <div id="" class="">{{this.$route.params.obj}}</div> -->
     </div>
+    
 </template>
 
 <script>
+import {mapState} from "vuex";
+import E from "wangeditor";
     export default {
         name: 'Catelogue',
         mounted() {
             this.drawLine();
+            // this.editor = new E("#editor");
+            // this.editor.config.uploadImgShowBase64 = true;
+            // this.editor.config.showLinkImg = false;
+            // this.editor.create();
+            // this.editor.txt.html();
+            this.title = this.titleVuex;
+            // this.editor.txt.html(`${this.contextVuex}`)
         },
+        computed:{
+                  ...mapState(['note']),
+                  titleVuex(){
+                    return this.$store.state.title;
+                  },
+                  contextVuex(){
+                    return this.$store.state.context;
+                  }
+                },
         data() {
             return {
+                //title: this.$route.params.title,
+                obj:this.$route.params.obj,
+                //context:this.contextVuex,
+                // context: this.$router.params.context,
+                jsonData:'',
+                context:'',
+                editor: "",
+                title: "",
+                userid: "",
                 input:'',
                 myChart: '',
                 syncData: '',
@@ -263,9 +299,24 @@
                 that.now = params
                 //    console.log(that.val);
                 //    this.now.treeAncestors.push({name:that.val})
-                console.log(that.now);
+                 console.log(that.now);
                 if (that.now.data.src != undefined) {
-                    window.location.href="http://www.baidu.com"
+                    console.log(1);
+                    // window.location.href="http://www.baidu.com"
+                    // console.log(that.now.data.src);
+                } else  {
+                    console.log(1);
+                    that.$message({
+                        type: 'info',
+                        message: `请新建笔记`});
+                        }
+                if(that.now.data.name == '显示笔记') {
+                    if(that.$route.params.obj != null) {
+                        that.now.data.src = that.$route.params.obj;
+                        that.title = that.now.data.src.src[0].title;
+                        that.context = that.now.data.src.src[0].context
+                        console.log(that.title);
+                    } 
                 }
                 if (that.now.data.name == '新建文件') {
                     // this.$router.go({name: 'edit', params: {name: that.now.data.name}});
@@ -275,7 +326,8 @@
                 if (that.now.data.name == '新建笔记') {
                     that.$router.push({name: 'edit', params: {
                         name: that.now.treeAncestors[2].name,
-                        father: that.now.treeAncestors[0].name,
+                        father: that.now.treeAncestors[1].name,
+                        obj: that.now.data
                     }
                         });
                     //that.open()
@@ -337,5 +389,27 @@
     margin-top: 10px;
     border: 1px solid red;
     padding-left: 10px;
+}
+.title {
+    z-index: 100;
+    margin-top: 15%;
+    margin-left: 40px;
+}
+.context {
+    z-index: 100;
+    margin-top: 10%;
+    margin-left: 40px;
+}
+.box {
+    width: 50%;
+    height: 100%;
+    border-left: 1px solid red;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -10;
+}
+.pic_box {
+    
 }
 </style>

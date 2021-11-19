@@ -49,6 +49,12 @@ const mutations = {
     closeTab(state, val){
         let result = state.tabList.findIndex(item => item.name === val.name)
         state.tabList.splice(result, 1)
+    },
+    setTitle(state, val){
+        state.title = val;
+    },
+    setContext(state, val){
+        state.context = val;
     }
 }
 

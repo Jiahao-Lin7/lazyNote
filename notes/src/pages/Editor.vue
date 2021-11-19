@@ -1,6 +1,7 @@
 <template>
   <div class="textBox">
     <br />
+    <!-- <div>{{this.name}} {{this.obj}}</div> -->
     <el-input type="text" class="title" v-model="title" placeholder="请输入标题" ></el-input>
     <br /><br />
     <div id="editor" class="editor"></div>
@@ -8,7 +9,7 @@
       <el-button type="info" round class="exit" @click="exitEditor"
         >退出</el-button
       >
-      <el-button type="danger" round class="add" @click="submit"
+      <el-button type="danger" round class="add" @click="submit()"
         >保存</el-button
       >
     </div>
@@ -22,10 +23,13 @@ export default {
   name: "Editor",
   data() {
     return {
+      obj: this.$route.params.obj,
       jsonData:'',
       editor: "",
       title: "",
       userid: "",
+      name:this.$route.params.name,
+      father:this.$route.params.father,
     };
   },
   mounted() {
@@ -40,6 +44,7 @@ export default {
   },
   methods: {
     submit() {
+      console.log(11);
       var data = new FormData();
       data.append("titleAndcata", {title:this.title, cata: this.cata});
       data.append("content", this.editor.txt.html);
@@ -47,11 +52,26 @@ export default {
         var objData = {};
         formData.forEach((value, key) => objData[key] = value);
         return JSON.stringify(objData);
+        
       };
       
       var jsonData = convert_FormData_to_json(data);
-      console.log(data);
-      console.log(jsonData);
+      this.$store.commit("setTitle", this.title);
+        this.$store.commit("setContext", this.editor.txt.html());
+        console.log(1);
+        this.title = this.title
+        this.context = this.editor.txt.html()
+        console.log(this.name);
+        let obj = this.obj;
+        
+        
+        // let context = this.name.context;
+        obj.src = [{title:this.title,context:this.context}]
+        this.$router.push({name: 'catalogue', params:{
+          obj: obj,
+          
+          // context: context
+        }})
       // this.$axios({
       //   methdo: post,
       //   url: "",
@@ -71,13 +91,13 @@ export default {
         // this.$store.commit('ADD_NOTE',this.title)
         //this.$store.commit("addnote/setPrint", { //print 表示vuex的文件名
           this.jsonData = jsonData
-          console.log(this.jsonData);
+          // console.log(this.jsonData);
 //         jsonData: jsonData
 // });
     },
     exitEditor(){
         this.$router.push({
-            name:'notebook'
+            name:'catalogue'
         })
     }
   },
